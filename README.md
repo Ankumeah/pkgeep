@@ -23,14 +23,14 @@ If your storage option is not listed here, keep reading
 
 ## What if my package manager or storage option is not in the supported list?
 pkgeep allows custom entries to make sure you are supported on
-whatever bespoke package manger you use (I dont judge)
+whatever bespoke package manger or storage option you use (I dont judge)
 
 ## Command usage
 Still in dev
 
-## Example config here
+## Example config
 Still in dev
 
 ## Contributing
 - Follow commit prefix conventions (tho fun commit bodies are appriciated ;) )
-- AI assisted is allowed, alop written isen't
+- AI assisted is allowed, slop written isen't
