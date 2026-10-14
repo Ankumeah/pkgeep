@@ -8,8 +8,8 @@ type Mode interface {
 	Handle(args []string)
 }
 
-type flag interface {
-	name() string
-	shortName() string
-	description() string
+type flag struct {
+	name        string
+	shortName   string
+	description string
 }

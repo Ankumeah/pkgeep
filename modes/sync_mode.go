@@ -5,7 +5,7 @@ type SyncMode struct {
 	verbose    bool
 }
 
-func init() { Modes["sync"] = SyncMode{} }
+func init() { Modes[SyncMode{}.Name()] = SyncMode{} }
 
 func (m SyncMode) Name() string        { return "sync" }
 func (m SyncMode) Description() string { return "Syncs all packages to sources" }

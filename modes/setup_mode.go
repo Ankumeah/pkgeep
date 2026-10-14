@@ -5,7 +5,7 @@ type SetupMode struct {
 	verbose    string
 }
 
-func init() { Modes["setup"] = SetupMode{} }
+func init() { Modes[SetupMode{}.Name()] = SetupMode{} }
 
 func (m SetupMode) Name() string        { return "setup" }
 func (m SetupMode) Description() string { return "Sets up all hooks and pings sources" }

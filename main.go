@@ -9,14 +9,13 @@ import (
 
 func main() {
 	args := os.Args
-	fmt.Println(args)
 
 	if len(args) < 1 {
 		fmt.Println("Nice potato pc! (argc <= 1)")
 		os.Exit(1)
 	} else if len(args) < 2 {
 		fmt.Println("No mode provided")
-		modes.HelpMode{}.Handle(nil)
+		modes.HelpMode{}.Handle(args)
 		os.Exit(1)
 	}
 
