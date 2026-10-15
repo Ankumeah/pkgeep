@@ -28,7 +28,6 @@ whatever bespoke package manger or storage option you use (I dont judge)
 ## Command usage
 In dev
 
-
 ## Example config
 
 > [!NOTE]

@@ -33,14 +33,14 @@ func init() { PackageManagers[Pacman{}.Name()] = Pacman{} }
 
 func (p Pacman) Name() string { return "pacman" }
 
-func (p Pacman) Setup(bin string, config map[string]any) error {
-	su := pacmanGetSu(config)
+func (p Pacman) Setup(config map[string]any) error {
+	su := getSu(config)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
 	cmd := exec.Command(
 		su, "sh", "-c",
-		fmt.Sprintf(pacmanHook, pacmanHookFile+".tmp", bin),
+		fmt.Sprintf(pacmanHook, pacmanHookFile+".tmp", getCmd(config)),
 	)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -71,10 +71,7 @@ func (p Pacman) Teardown(config map[string]any) error {
 		return err
 	}
 
-	cmd := exec.Command(
-		pacmanGetSu(config),
-		"rm", pacmanHookFile,
-	)
+	cmd := exec.Command(getSu(config), "rm", pacmanHookFile)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -109,25 +106,4 @@ func (p Pacman) Add(pkg string, config map[string]any) Package {
 		Name:    pkg,
 		Manager: "pacman",
 	}
-}
-
-func pacmanGetSu(config map[string]any) string {
-	_su, ok := config["su"]
-	if !ok {
-		fmt.Println("pacman setup needs root access, specify su within your config")
-		os.Exit(1)
-	}
-
-	su, ok := _su.(string)
-	if !ok {
-		fmt.Println("su for pacman must of type string")
-		os.Exit(1)
-	}
-
-	if su == "" {
-		fmt.Println("su for pacman cannot be empty. Use a wrapper script for su if you really want to")
-		os.Exit(1)
-	}
-
-	return su
 }

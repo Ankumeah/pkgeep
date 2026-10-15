@@ -43,7 +43,7 @@ func (m SetupMode) Handle(args []string) {
 
 		fmt.Printf("Setting up %v hook\n", manager.Name)
 
-		if err := m.Setup(args[0], manager.Config); err != nil {
+		if err := m.Setup(manager.Config); err != nil {
 			fmt.Printf("Error while setting up %v hook: %v\n", manager.Name, err)
 			os.Exit(1)
 		}
