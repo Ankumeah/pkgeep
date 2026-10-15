@@ -1,9 +1,6 @@
 package modes
 
-type AddMode struct {
-	configPath string
-	verbose    bool
-}
+type AddMode struct{}
 
 func init() { Modes[AddMode{}.Name()] = AddMode{} }
 

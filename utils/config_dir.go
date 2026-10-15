@@ -15,6 +15,7 @@ func ConfigDir() string {
 				"running this on?): %v\n",
 			err,
 		)
+		os.Exit(1)
 	}
 
 	return filepath.Join(baseConfigDir, "pkgeep")

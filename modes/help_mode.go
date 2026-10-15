@@ -26,6 +26,7 @@ func (m HelpMode) Handle(args []string) {
 		text.WriteString("\t\tFlags:\n")
 		for _, flag := range mode.Flags() {
 			text.WriteString("\t\t\t" + flag.name + ", " + flag.shortName + ": " + flag.description + "\n")
+			text.WriteString("\t\t\t\tUsage: " + flag.usage + "\n")
 		}
 
 		text.WriteByte('\n')

@@ -26,10 +26,32 @@ pkgeep allows custom entries to make sure you are supported on
 whatever bespoke package manger or storage option you use (I dont judge)
 
 ## Command usage
-Still in dev
+In dev
+
 
 ## Example config
-Still in dev
+
+> [!NOTE]
+> Full spec + YAML configs coming soon!
+
+```json
+[
+  {
+    "name": "pacman",
+    "type": "package_manager",
+    "enabled": true,
+    "config": {
+      "su": "sudo"
+    }
+  },
+  {
+    "name": "local_json",
+    "type": "storage",
+    "enabled": true,
+    "config": {}
+  }
+]
+```
 
 ## Contributing
 - Follow commit prefix conventions (tho fun commit bodies are appriciated ;) )

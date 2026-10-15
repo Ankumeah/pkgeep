@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/Ankumeah/pkgeep/package-managers"
 	"github.com/Ankumeah/pkgeep/utils"
 )
 
@@ -13,8 +14,12 @@ const localJSONStorageTempFilePattern = "pkgeep-local_json_storage-*"
 
 type LocalJSONStorage struct{}
 
+func init() { Stoarges[LocalJSONStorage{}.Name()] = LocalJSONStorage{} }
+
+func (s LocalJSONStorage) Name() string { return "local_json" }
+
 func (s LocalJSONStorage) Save(
-	managers []PackageManager,
+	managers []packagemanagers.PackageManager,
 ) error {
 	tmp, err := os.CreateTemp(
 		"", localJSONStorageTempFilePattern,
@@ -42,7 +47,7 @@ func (s LocalJSONStorage) Save(
 	)
 }
 
-func Get() ([]PackageManager, error) {
+func (s LocalJSONStorage) Get() ([]packagemanagers.PackageManager, error) {
 	file, err := os.Open(
 		filepath.Join(
 			utils.ConfigDir(),
@@ -54,7 +59,7 @@ func Get() ([]PackageManager, error) {
 	}
 	defer file.Close()
 
-	managers := []PackageManager{}
+	managers := []packagemanagers.PackageManager{}
 	if err := json.NewDecoder(
 		file,
 	).Decode(&managers); err != nil {

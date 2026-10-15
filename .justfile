@@ -1,7 +1,8 @@
 default: run
 
 run *args:
-  go run . {{ args }}
+  go build -o build/out .
+  ./build/out {{ args }}
 
 ci ci = "":
   #! /bin/sh
@@ -10,6 +11,5 @@ ci ci = "":
     echo 'CI = true'
     export CI=true
   fi
-
 
   ./.ci.sh

@@ -6,8 +6,10 @@ type Package struct {
 }
 
 type PackageManager interface {
-	Setup(bin string) error
-	Teardown() error
-	GetAllPackages() ([]Package, error)
-	Add(pkg string) Package
+	Name() string
+
+	Setup(bin string, config map[string]any) error
+	Teardown(config map[string]any) error
+	GetAllPackages(config map[string]any) ([]Package, error)
+	Add(pkg string, config map[string]any) Package
 }
