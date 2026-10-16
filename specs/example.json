@@ -1,0 +1,20 @@
+[
+  {
+    "name": "pacman",
+    "type": "package_manager",
+    "enabled": true,
+    "config": {
+      "config_file": "/path/to/config/file",
+      "cmd": "/path/to/pkgeep/binary",
+      "su": "sudo"
+    }
+  },
+  {
+    "name": "local_json",
+    "type": "storage",
+    "enabled": true,
+    "config": {
+      "save_path": "/save/path/for/json/file"
+    }
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "name",
+      "type",
+      "enabled",
+      "config"
+    ],
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "storage",
+          "package_manager"
+        ]
+      },
+      "enabled": {
+        "type": "boolean"
+      },
+      "config": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": [
+    "config_file",
+    "cmd",
+    "su"
+  ],
+  "properties": {
+    "config_file": {
+      "type": "string"
+    },
+    "cmd": {
+      "type": "string"
+    },
+    "su": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
