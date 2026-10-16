@@ -27,17 +27,22 @@ func getSu(config map[string]any) string {
 }
 
 func getCmd(config map[string]any) string {
-  _cmd, ok := config["cmd"]
-  if !ok {
-    fmt.Println("cmd not provided in config")
-    os.Exit(1)
-  }
+	_cmd, ok := config["cmd"]
+	if !ok {
+		fmt.Println("cmd not provided in config")
+		os.Exit(1)
+	}
 
-  cmd, ok := _cmd.(string)
-  if !ok {
-    fmt.Println("cmd in config must be string")
-    os.Exit(1)
-  }
+	cmd, ok := _cmd.(string)
+	if !ok {
+		fmt.Println("cmd in config must be string")
+		os.Exit(1)
+	}
 
-  return cmd
+	if cmd == "" {
+		fmt.Println("cmd in config cannot be empty")
+		os.Exit(1)
+	}
+
+	return cmd
 }

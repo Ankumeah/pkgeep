@@ -92,6 +92,10 @@ func (p Pacman) GetAllPackages(config map[string]any) ([]Package, error) {
 	packages := []Package{}
 
 	for pkg := range strings.SplitSeq(buf.String(), "\n") {
+		if pkg == "" {
+			continue
+		}
+
 		packages = append(packages, Package{
 			Name:    strings.Fields(pkg)[0],
 			Manager: "pacman",
