@@ -46,3 +46,24 @@ func getCmd(config map[string]any) string {
 
 	return cmd
 }
+
+func getConfigFile(config map[string]any) string {
+	_configFile, ok := config["config_file"]
+	if !ok {
+		fmt.Println("config_file not provided in config")
+		os.Exit(1)
+	}
+
+	config_file, ok := _configFile.(string)
+	if !ok {
+		fmt.Println("config_file in config must be string")
+		os.Exit(1)
+	}
+
+	if config_file == "" {
+		fmt.Println("config_file in config must not be empty")
+		os.Exit(1)
+	}
+
+	return config_file
+}

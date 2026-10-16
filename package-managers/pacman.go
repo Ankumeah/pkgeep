@@ -21,7 +21,7 @@ Target = *
 
 [Action]
 Description = Tracking packages for pkgeek
-Exec = %s add
+Exec = %s sync --config-file=%s
 NeedsTargets
 When = PostTransaction
 EOF
@@ -40,7 +40,10 @@ func (p Pacman) Setup(config map[string]any) error {
 	// when renaming while ensuring atomicity
 	cmd := exec.Command(
 		su, "sh", "-c",
-		fmt.Sprintf(pacmanHook, pacmanHookFile+".tmp", getCmd(config)),
+		fmt.Sprintf(
+			pacmanHook, pacmanHookFile+".tmp",
+			getCmd(config), getConfigFile(config),
+		),
 	)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -103,11 +106,4 @@ func (p Pacman) GetAllPackages(config map[string]any) ([]Package, error) {
 	}
 
 	return packages, nil
-}
-
-func (p Pacman) Add(pkg string, config map[string]any) Package {
-	return Package{
-		Name:    pkg,
-		Manager: "pacman",
-	}
 }

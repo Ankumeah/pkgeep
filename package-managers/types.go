@@ -11,5 +11,4 @@ type PackageManager interface {
 	Setup(config map[string]any) error
 	Teardown(config map[string]any) error
 	GetAllPackages(config map[string]any) ([]Package, error)
-	Add(pkg string, config map[string]any) Package
 }
