@@ -2,6 +2,7 @@ package packagemanagers
 
 type Package struct {
 	Name    string `json:"name"`
+	Version string `json:"version"`
 	Manager string `json:"manager"`
 }
 

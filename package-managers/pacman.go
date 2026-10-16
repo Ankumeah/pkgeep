@@ -101,6 +101,7 @@ func (p Pacman) GetAllPackages(config map[string]any) ([]Package, error) {
 
 		packages = append(packages, Package{
 			Name:    strings.Fields(pkg)[0],
+			Version: strings.Fields(pkg)[1],
 			Manager: "pacman",
 		})
 	}

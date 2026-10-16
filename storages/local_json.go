@@ -41,7 +41,9 @@ func (s LocalJSONStorage) Save(
 	return os.Rename(file.Name(), savePath)
 }
 
-func (s LocalJSONStorage) Get(config map[string]any) ([]packagemanagers.Package, error) {
+func (s LocalJSONStorage) Get(
+	config map[string]any,
+) ([]packagemanagers.Package, error) {
 	savePath := getSavePath(config)
 
 	file, err := os.Open(savePath)
@@ -50,12 +52,12 @@ func (s LocalJSONStorage) Get(config map[string]any) ([]packagemanagers.Package,
 	}
 	defer file.Close()
 
-	managers := []packagemanagers.Package{}
+	packages := []packagemanagers.Package{}
 	if err := json.NewDecoder(
 		file,
-	).Decode(&managers); err != nil {
+	).Decode(&packages); err != nil {
 		return nil, err
 	}
 
-	return managers, nil
+	return packages, nil
 }
