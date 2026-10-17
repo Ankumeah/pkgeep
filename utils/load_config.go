@@ -5,11 +5,19 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
 func LoadConfig(path string) (packageManagers []ConfigEntry, storages []ConfigEntry) {
 	if path == "" {
 		path = filepath.Join(ConfigDir(), configFile)
+	}
+
+	configType := "yaml"
+	if strings.HasSuffix(path, ".json") {
+		configType = "json"
 	}
 
 	configFile, err := os.Open(path)
@@ -20,9 +28,15 @@ func LoadConfig(path string) (packageManagers []ConfigEntry, storages []ConfigEn
 	defer configFile.Close()
 
 	configEntries := []ConfigEntry{}
-	if err := json.NewDecoder(
-		configFile,
-	).Decode(&configEntries); err != nil {
+
+	switch configType {
+	case "yaml":
+		err = yaml.NewDecoder(configFile).Decode(&configEntries)
+	case "json":
+		err = json.NewDecoder(configFile).Decode(&configEntries)
+	}
+
+	if err != nil {
 		fmt.Printf("Error in config: %v\n", err)
 		os.Exit(1)
 	}

@@ -12,7 +12,7 @@ packaes and write them to whatever storage you want
 Later you can download all you packages with any one of your storage options
 
 ## Out of the box supported package manger
-- [pacman](https://pacman.archlinux.page/)
+- [pacman](https://pacman.archlinux.page/) (AUR packages installed through pacman (most AUR helpers like [yay](https://jguer.github.io/yay/) install packages through pacman) are also included)
 
 If your package manager is not listed here, keep reading
 
@@ -30,10 +30,9 @@ pkgeep allows custom entries to make sure you are supported on
 whatever bespoke package manger or storage option you use (I dont judge)
 
 ## Config
-> [!NOTE]
-> YAML based configs coming soon!
-
-pkgeep uses a json based config file.
+pkgeep by default uses a yaml based config file which is
+loaded from `~/.config/pkgeep/config.yaml`, it can be specified
+otherwise, by specifying you can also use a json config.
 Specs for the aboved mentioned can be found in `./specs/`
 
 ## Command usage

@@ -7,7 +7,7 @@
       "config_file": "/path/to/config/file",
       "cmd": "/path/to/pkgeep/binary",
       "su": "sudo",
-      "timeout_seconds": 60
+      "timeout_seconds": 60.0
     }
   },
   {
@@ -15,7 +15,8 @@
     "type": "storage",
     "enabled": true,
     "config": {
-      "save_path": "/path/to/json/file"
+      "save_path": "/path/to/json/file",
+      "timeout_seconds": 60.0
     }
   },
   {
@@ -23,10 +24,10 @@
     "type": "storage",
     "enabled": true,
     "config": {
-      "gist_id": "",
+      "gist_id": "gist_id",
       "filename": "github_gist.json",
-      "auth": "",
-      "timeout_seconds": 60
+      "auth": "auth",
+      "timeout_seconds": 60.0
     }
   }
 ]

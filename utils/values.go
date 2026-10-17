@@ -1,3 +1,3 @@
 package utils
 
-const configFile = "config.json"
+const configFile = "config.yaml"
