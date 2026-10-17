@@ -14,7 +14,17 @@
     "type": "storage",
     "enabled": true,
     "config": {
-      "save_path": "/save/path/for/json/file"
+      "save_path": "/path/to/json/file"
+    }
+  },
+  {
+    "name": "github_gist",
+    "type": "storage",
+    "enabled": true,
+    "config": {
+      "gist_id": "",
+      "filename": "github_gist.json",
+      "auth": ""
     }
   }
 ]

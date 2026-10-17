@@ -7,6 +7,6 @@ import (
 type Storage interface {
 	Name() string
 
-	Save(managers []packagemanagers.Package, config map[string]any) error
+	Save(packages []packagemanagers.Package, config map[string]any) error
 	Get(config map[string]any) ([]packagemanagers.Package, error)
 }

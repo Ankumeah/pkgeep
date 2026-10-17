@@ -34,7 +34,7 @@ func init() { PackageManagers[Pacman{}.Name()] = Pacman{} }
 func (p Pacman) Name() string { return "pacman" }
 
 func (p Pacman) Setup(config map[string]any) error {
-	su := getSu(config)
+	su := get[string]("su", config)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
@@ -42,7 +42,7 @@ func (p Pacman) Setup(config map[string]any) error {
 		su, "sh", "-c",
 		fmt.Sprintf(
 			pacmanHook, pacmanHookFile+".tmp",
-			getCmd(config), getConfigFile(config),
+			get[string]("cmd", config), get[string]("config_file", config),
 		),
 	)
 	cmd.Stdin = os.Stdin
@@ -74,7 +74,7 @@ func (p Pacman) Teardown(config map[string]any) error {
 		return err
 	}
 
-	cmd := exec.Command(getSu(config), "rm", pacmanHookFile)
+	cmd := exec.Command(get[string]("su", config), "rm", pacmanHookFile)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

@@ -3,25 +3,25 @@ package storages
 import (
 	"fmt"
 	"os"
+	"reflect"
 )
 
-func getSavePath(config map[string]any) string {
-	_savePath, ok := config["save_path"]
+func get[T any](field string, config map[string]any) T {
+	_field, ok := config[field]
 	if !ok {
-		fmt.Println("save_path not provided in config")
+		fmt.Println(field + " not provided in config")
 		os.Exit(1)
 	}
 
-	savePath, ok := _savePath.(string)
+	f, ok := _field.(T)
 	if !ok {
-		fmt.Println("save_path in config must be string")
+		fmt.Println(
+			field + " in config must be " +
+				reflect.TypeFor[T]().String() +
+				" got " + reflect.TypeOf(_field).String(),
+		)
 		os.Exit(1)
 	}
 
-	if savePath == "" {
-		fmt.Println("save_path in config cannot be empty")
-		os.Exit(1)
-	}
-
-	return savePath
+	return f
 }

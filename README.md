@@ -6,7 +6,7 @@ all your package managers with multiple storage backends
 ## How it works
 You define all the package managers and storage options you want pkgeep to
 track and sync to in you config file. pkgeep uses hooks provided
-by most package managers to automaticlly maintaina list of all installed
+by most package managers to automatically maintaian list of all installed
 packaes and write them to whatever storage you want
 
 Later you can download all you packages with any one of your storage options
@@ -18,6 +18,7 @@ If your package manager is not listed here, keep reading
 
 ## Out of the box supported storage backends
 - local json file
+- [Github Gist](https://gist.github.com/)
 
 If your storage option is not listed here, keep reading
 

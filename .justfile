@@ -13,3 +13,19 @@ ci ci = "":
   fi
 
   ./.ci.sh
+
+  just format_spec
+
+format_spec:
+  #! /bin/sh
+
+  set -eu
+
+  cd specs/
+
+  for file in *; do
+    echo "${file}"
+
+    jq . "${file}" > "${file}.tmp"
+    mv "${file}.tmp" "${file}"
+  done

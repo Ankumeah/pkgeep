@@ -14,10 +14,10 @@ func init() { Stoarges[LocalJSONStorage{}.Name()] = LocalJSONStorage{} }
 func (s LocalJSONStorage) Name() string { return "local_json" }
 
 func (s LocalJSONStorage) Save(
-	managers []packagemanagers.Package,
+	packages []packagemanagers.Package,
 	config map[string]any,
 ) error {
-	savePath := getSavePath(config)
+	savePath := get[string]("save_path", config)
 
 	file, err := os.OpenFile(
 		savePath+".tmp",
@@ -34,7 +34,7 @@ func (s LocalJSONStorage) Save(
 
 	if err := json.NewEncoder(
 		file,
-	).Encode(managers); err != nil {
+	).Encode(packages); err != nil {
 		return err
 	}
 
@@ -44,7 +44,7 @@ func (s LocalJSONStorage) Save(
 func (s LocalJSONStorage) Get(
 	config map[string]any,
 ) ([]packagemanagers.Package, error) {
-	savePath := getSavePath(config)
+	savePath := get[string]("save_path", config)
 
 	file, err := os.Open(savePath)
 	if err != nil {
