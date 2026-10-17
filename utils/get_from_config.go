@@ -1,4 +1,4 @@
-package packagemanagers
+package utils
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func get[T any](field string, config map[string]any) T {
+func GetFromConfig[T any](field string, config map[string]any) T {
 	_field, ok := config[field]
 	if !ok {
 		fmt.Println(field + " not provided in config")

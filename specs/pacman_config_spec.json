@@ -3,7 +3,8 @@
   "required": [
     "config_file",
     "cmd",
-    "su"
+    "su",
+    "timeout_seconds"
   ],
   "properties": {
     "config_file": {
@@ -14,6 +15,9 @@
     },
     "su": {
       "type": "string"
+    },
+    "timeout_seconds": {
+      "type": "integer"
     }
   },
   "additionalProperties": false

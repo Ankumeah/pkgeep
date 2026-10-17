@@ -6,7 +6,8 @@
     "config": {
       "config_file": "/path/to/config/file",
       "cmd": "/path/to/pkgeep/binary",
-      "su": "sudo"
+      "su": "sudo",
+      "timeout_seconds": 60
     }
   },
   {
@@ -24,7 +25,8 @@
     "config": {
       "gist_id": "",
       "filename": "github_gist.json",
-      "auth": ""
+      "auth": "",
+      "timeout_seconds": 60
     }
   }
 ]

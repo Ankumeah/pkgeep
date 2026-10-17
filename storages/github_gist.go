@@ -2,6 +2,7 @@ package storages
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -10,6 +11,7 @@ import (
 	"time"
 
 	"github.com/Ankumeah/pkgeep/package-managers"
+	"github.com/Ankumeah/pkgeep/utils"
 )
 
 const githubGistBaseURL = "https://api.github.com/gists/"
@@ -25,14 +27,23 @@ func (s GithubGistStorage) Save(
 	packages []packagemanagers.Package,
 	config map[string]any,
 ) error {
+	ctx := context.Background()
+
+	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
+	if timeout < 0 {
+		var cancel func()
+		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
+		defer cancel()
+	}
+
 	pkgs, err := json.Marshal(packages)
 	if err != nil {
 		return err
 	}
 
-	gistID := get[string]("gist_id", config)
-	filename := get[string]("filename", config)
-	auth := get[string]("auth", config)
+	gistID := utils.GetFromConfig[string]("gist_id", config)
+	filename := utils.GetFromConfig[string]("filename", config)
+	auth := utils.GetFromConfig[string]("auth", config)
 
 	bodyStruct := struct {
 		Files map[string]struct {
@@ -53,7 +64,8 @@ func (s GithubGistStorage) Save(
 		return err
 	}
 
-	request, err := http.NewRequest(
+	request, err := http.NewRequestWithContext(
+		ctx,
 		http.MethodPatch,
 		githubGistBaseURL+gistID,
 		bytes.NewReader(body),
@@ -89,10 +101,20 @@ func (s GithubGistStorage) Save(
 func (s GithubGistStorage) Get(
 	config map[string]any,
 ) ([]packagemanagers.Package, error) {
-	gistID := get[string]("gist_id", config)
-	filename := get[string]("filename", config)
+	ctx := context.Background()
 
-	request, err := http.NewRequest(
+	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
+	if timeout < 0 {
+		var cancel func()
+		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
+		defer cancel()
+	}
+
+	gistID := utils.GetFromConfig[string]("gist_id", config)
+	filename := utils.GetFromConfig[string]("filename", config)
+
+	request, err := http.NewRequestWithContext(
+		ctx,
 		http.MethodGet,
 		githubGistBaseURL+gistID,
 		nil,

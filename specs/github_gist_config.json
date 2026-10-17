@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": [
+    "gist_id",
+    "filename",
+    "auth",
+    "timeout_seconds"
+  ],
+  "properties": {
+    "gist_id": {
+      "type": "string"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "auth": {
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false
+}

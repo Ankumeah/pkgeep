@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/Ankumeah/pkgeep/package-managers"
+	"github.com/Ankumeah/pkgeep/utils"
 )
 
 type LocalJSONStorage struct{}
@@ -17,7 +18,7 @@ func (s LocalJSONStorage) Save(
 	packages []packagemanagers.Package,
 	config map[string]any,
 ) error {
-	savePath := get[string]("save_path", config)
+	savePath := utils.GetFromConfig[string]("save_path", config)
 
 	file, err := os.OpenFile(
 		savePath+".tmp",
@@ -44,7 +45,7 @@ func (s LocalJSONStorage) Save(
 func (s LocalJSONStorage) Get(
 	config map[string]any,
 ) ([]packagemanagers.Package, error) {
-	savePath := get[string]("save_path", config)
+	savePath := utils.GetFromConfig[string]("save_path", config)
 
 	file, err := os.Open(savePath)
 	if err != nil {
