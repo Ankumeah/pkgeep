@@ -13,6 +13,8 @@ Later you can download all you packages with any one of your storage options
 
 ## Out of the box supported package manger
 - [pacman](https://pacman.archlinux.page/) (AUR packages installed through pacman (most AUR helpers like [yay](https://jguer.github.io/yay/) install packages through pacman) are also included)
+- [apt](https://wiki.debian.org/AptCLI)
+- [dpkg](https://www.dpkg.org/) (It is reccamended to use apt instead)
 
 If your package manager is not listed here, keep reading
 
@@ -24,7 +26,7 @@ If your storage option is not listed here, keep reading
 
 ## What if my package manager or storage option is not in the supported list?
 > [!NOTE]
-> This feature is still in dev
+> This feature is still in dev and not released yet
 
 pkgeep allows custom entries to make sure you are supported on
 whatever bespoke package manger or storage option you use (I dont judge)

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": [
+    "config_file",
+    "cmd",
+    "su",
+    "timeout_seconds"
+  ],
+  "properties": {
+    "config_file": {
+      "type": "string"
+    },
+    "cmd": {
+      "type": "string"
+    },
+    "su": {
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,6 +1,22 @@
 - name: pacman
   type: package_manager
-  enabled: true
+  enabled: false
+  config:
+    config_file: /path/to/config/file
+    cmd: /path/to/pkgeep/binary
+    su: sudo
+    timeout_seconds: 60.0
+- name: apt
+  type: package_manager
+  enabled: false
+  config:
+    config_file: /path/to/config/file
+    cmd: /path/to/pkgeep/binary
+    su: sudo
+    timeout_seconds: 60.0
+- name: dpkg
+  type: package_manager
+  enabled: false
   config:
     config_file: /path/to/config/file
     cmd: /path/to/pkgeep/binary
@@ -10,11 +26,11 @@
   type: storage
   enabled: true
   config:
-    save_path: /path/to/json/file
+    save_path: /path/to/json
     timeout_seconds: 60.0
 - name: github_gist
   type: storage
-  enabled: true
+  enabled: false
   config:
     gist_id: gist_id
     filename: github_gist.json

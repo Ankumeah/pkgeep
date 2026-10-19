@@ -27,11 +27,13 @@ jobs:
           cache: true
 
       - name: Compile binaries
+        env:
+          TAG: ${{ github.ref_name }}
         run: |
           mkdir -p build
           for os in $GOOS_LIST; do
             for arch in $GOARCH_LIST; do
-              output="build/pkgeep-${os}-${arch}"
+              output="build/pkgeep-${TAG}-${os}-${arch}"
               if [ "$os" = "windows" ]; then
                 output="${output}.exe"
               fi
