@@ -36,3 +36,15 @@
     filename: github_gist.json
     auth: auth
     timeout_seconds: 60.0
+- name: s3
+  type: storage
+  enabled: false
+  config:
+    object_id: pkgeep.json
+    bucket: pkgeep
+    location: us-east-1
+    url: url
+    access_key_id: access_key_id
+    secret_access_key: secret_access_key
+    ssl: true
+    timeout_seconds: 60.0
