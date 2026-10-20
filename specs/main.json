@@ -1,0 +1,25 @@
+{
+  "type": "array",
+  "items": {
+    "oneOf": [
+      {
+        "$ref": "./apt.json"
+      },
+      {
+        "$ref": "./dpkg.json"
+      },
+      {
+        "$ref": "./pacman.json"
+      },
+      {
+        "$ref": "./s3.json"
+      },
+      {
+        "$ref": "./local_json.json"
+      },
+      {
+        "$ref": "./github_gist.json"
+      }
+    ]
+  }
+}

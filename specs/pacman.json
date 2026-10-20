@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "enabled",
+    "config"
+  ],
+  "properties": {
+    "name": {
+      "const": "pacman",
+      "description": "Name of the package manager or storage"
+    },
+    "type": {
+      "const": "package_manager",
+      "description": "package_manager or storage"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Weather or not use to this entry"
+    },
+    "config": {
+      "type": "object",
+      "description": "Entry specifc values",
+      "required": [
+        "config_file",
+        "cmd",
+        "su",
+        "timeout_seconds",
+        "aur"
+      ],
+      "properties": {
+        "config_file": {
+          "type": "string",
+          "description": "Path to the config file"
+        },
+        "cmd": {
+          "type": "string",
+          "description": "Path to the pkgeep binary"
+        },
+        "su": {
+          "type": "string",
+          "description": "Path to what binary to use for root elevation"
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "description": "Timeout for oprations in seconds"
+        },
+        "aur": {
+          "type": "boolean",
+          "description": "Weather or not AUR is enabled (only chooses weather to use aur_helper during download mode)"
+        },
+        "aur_helper": {
+          "type": "string",
+          "description": "Path to AUR helper to use"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "aur": {
+              "const": true
+            }
+          },
+          "required": [
+            "aur_helper"
+          ]
+        },
+        {
+          "properties": {
+            "aur": {
+              "const": false
+            }
+          },
+          "not": {
+            "required": [
+              "aur_helper"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

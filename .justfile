@@ -29,9 +29,3 @@ format_spec:
     jq . "${file}" > "${file}.tmp"
     mv "${file}.tmp" "${file}"
   done
-
-  echo 'example.yaml'
-  yamlfmt example.yaml
-
-  echo 'example.json'
-  yq . example.yaml > example.json

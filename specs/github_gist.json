@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "enabled",
+    "config"
+  ],
+  "properties": {
+    "name": {
+      "const": "github_gist",
+      "description": "Name of the package manager or storage"
+    },
+    "type": {
+      "const": "storage",
+      "description": "package_manager or storage"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Weather or not use to this entry"
+    },
+    "config": {
+      "type": "object",
+      "description": "Entry specifc values",
+      "required": [
+        "gist_id",
+        "filename",
+        "auth",
+        "timeout_seconds"
+      ],
+      "properties": {
+        "gist_id": {
+          "type": "string",
+          "description": "gist_id of the gist (gist must be created beforehand)"
+        },
+        "filename": {
+          "type": "string",
+          "description": "Filename of the gist"
+        },
+        "auth": {
+          "type": "string",
+          "description": "Github token with gist access"
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "description": "Timeout for oprations in seconds"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

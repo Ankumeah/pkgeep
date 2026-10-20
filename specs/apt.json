@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "enabled",
+    "config"
+  ],
+  "properties": {
+    "name": {
+      "const": "apt",
+      "description": "Name of the package manager or storage"
+    },
+    "type": {
+      "const": "package_manager",
+      "description": "package_manager or storage"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Weather or not use to this entry"
+    },
+    "config": {
+      "type": "object",
+      "description": "Entry specifc values",
+      "required": [
+        "config_file",
+        "cmd",
+        "su",
+        "timeout_seconds"
+      ],
+      "properties": {
+        "config_file": {
+          "type": "string",
+          "description": "Path to the config file"
+        },
+        "cmd": {
+          "type": "string",
+          "description": "Path to the pkgeep binary"
+        },
+        "su": {
+          "type": "string",
+          "description": "Path to what binary to use for root elevation"
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "description": "Timeout for oprations in seconds"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

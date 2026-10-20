@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "enabled",
+    "config"
+  ],
+  "properties": {
+    "name": {
+      "const": "s3",
+      "description": "Name of the package manager or storage"
+    },
+    "type": {
+      "const": "storage",
+      "description": "package_manager or storage"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Weather or not use to this entry"
+    },
+    "config": {
+      "type": "object",
+      "description": "Entry specifc values",
+      "required": [
+        "object_id",
+        "bucket",
+        "location",
+        "url",
+        "access_key_id",
+        "secret_access_key",
+        "ssl",
+        "timeout_seconds"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "description": "ID of the object"
+        },
+        "bucket": {
+          "type": "string",
+          "description": "Name of the S3 bucket"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the bucket"
+        },
+        "url": {
+          "type": "string",
+          "description": "S3 endpoint URL"
+        },
+        "access_key_id": {
+          "type": "string",
+          "description": "S3 access key ID"
+        },
+        "secret_access_key": {
+          "type": "string",
+          "description": "S3 secret access key"
+        },
+        "ssl": {
+          "type": "boolean",
+          "description": "Whether to use SSL"
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "description": "Timeout for oprations in seconds"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
