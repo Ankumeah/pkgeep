@@ -4,7 +4,9 @@
     "config_file",
     "cmd",
     "su",
-    "timeout_seconds"
+    "timeout_seconds",
+    "aur",
+    "aur_helper"
   ],
   "properties": {
     "config_file": {
@@ -18,6 +20,12 @@
     },
     "timeout_seconds": {
       "type": "integer"
+    },
+    "aur": {
+      "type": "boolean"
+    },
+    "aur_helper": {
+      "type": "string"
     }
   },
   "additionalProperties": false

@@ -6,6 +6,8 @@
     cmd: /path/to/pkgeep/binary
     su: sudo
     timeout_seconds: 60.0
+    aur: true
+    aur_helper: yay
 - name: apt
   type: package_manager
   enabled: false

@@ -7,7 +7,9 @@
       "config_file": "/path/to/config/file",
       "cmd": "/path/to/pkgeep/binary",
       "su": "sudo",
-      "timeout_seconds": 60.0
+      "timeout_seconds": 60.0,
+      "aur": true,
+      "aur_helper": "yay"
     }
   },
   {

@@ -2,12 +2,11 @@ package packagemanagers
 
 import (
 	"bytes"
-	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
-	"time"
 
 	"github.com/Ankumeah/pkgeep/utils"
 )
@@ -28,20 +27,14 @@ func init() { PackageManagers[Dpkg{}.Name()] = Dpkg{} }
 func (p Dpkg) Name() string { return "dpkg" }
 
 func (p Dpkg) Setup(config map[string]any) error {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	su := utils.GetFromConfig[string]("su", config)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
-	dpkgRunCmd(
+	runCmd(
 		ctx,
 		su, "sh", "-c",
 		fmt.Sprintf(
@@ -51,40 +44,29 @@ func (p Dpkg) Setup(config map[string]any) error {
 		),
 	)
 
-	dpkgRunCmd(ctx, su, "mv", dpkgTempHookFile, dpkgHookFile)
+	runCmd(ctx, su, "mv", dpkgTempHookFile, dpkgHookFile)
 
 	return nil
 }
 
 func (p Dpkg) Teardown(config map[string]any) error {
-	ctx := context.Background()
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
 	if _, err := os.Stat(dpkgHookFile); os.IsNotExist(err) {
 		return nil
 	} else if err != nil {
 		return err
 	}
 
-	dpkgRunCmd(ctx, utils.GetFromConfig[string]("su", config), "rm", dpkgHookFile)
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), "rm", dpkgHookFile)
 
 	return nil
 }
 
 func (p Dpkg) GetAllPackages(config map[string]any) ([]Package, error) {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	buf := bytes.NewBuffer(nil)
 
@@ -112,14 +94,6 @@ func (p Dpkg) GetAllPackages(config map[string]any) ([]Package, error) {
 	return packages, nil
 }
 
-func dpkgRunCmd(ctx context.Context, name string, args ...string) {
-	cmd := exec.CommandContext(ctx, name, args...)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	if err := cmd.Run(); err != nil {
-		fmt.Printf("Error while running root command: %v\n", err)
-		os.Exit(1)
-	}
+func (m Dpkg) Download(packages []Package, config map[string]any) error {
+	return errors.New("Cannot download with dpkg")
 }

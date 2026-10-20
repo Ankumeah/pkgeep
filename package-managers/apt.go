@@ -2,12 +2,10 @@ package packagemanagers
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
-	"time"
 
 	"github.com/Ankumeah/pkgeep/utils"
 )
@@ -28,20 +26,14 @@ func init() { PackageManagers[Apt{}.Name()] = Apt{} }
 func (p Apt) Name() string { return "apt" }
 
 func (p Apt) Setup(config map[string]any) error {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	su := utils.GetFromConfig[string]("su", config)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
-	aptRunCmd(
+	runCmd(
 		ctx,
 		su, "sh", "-c",
 		fmt.Sprintf(
@@ -51,40 +43,29 @@ func (p Apt) Setup(config map[string]any) error {
 		),
 	)
 
-	aptRunCmd(ctx, su, "mv", aptTempHookFile, aptHookFile)
+	runCmd(ctx, su, "mv", aptTempHookFile, aptHookFile)
 
 	return nil
 }
 
 func (p Apt) Teardown(config map[string]any) error {
-	ctx := context.Background()
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
 	if _, err := os.Stat(aptHookFile); os.IsNotExist(err) {
 		return nil
 	} else if err != nil {
 		return err
 	}
 
-	aptRunCmd(ctx, utils.GetFromConfig[string]("su", config), "rm", aptHookFile)
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), "rm", aptHookFile)
 
 	return nil
 }
 
 func (p Apt) GetAllPackages(config map[string]any) ([]Package, error) {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	buf := bytes.NewBuffer(nil)
 
@@ -116,14 +97,19 @@ func (p Apt) GetAllPackages(config map[string]any) ([]Package, error) {
 	return packages, nil
 }
 
-func aptRunCmd(ctx context.Context, name string, args ...string) {
-	cmd := exec.CommandContext(ctx, name, args...)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+func (m Apt) Download(packages []Package, config map[string]any) error {
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
-	if err := cmd.Run(); err != nil {
-		fmt.Printf("Error while running root command: %v\n", err)
-		os.Exit(1)
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), "apt", "update")
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), "apt", "upgrade")
+
+	args := []string{"apt", "install"}
+	for _, pkg := range packages {
+		args = append(args, pkg.Name)
 	}
+
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), args...)
+
+	return nil
 }

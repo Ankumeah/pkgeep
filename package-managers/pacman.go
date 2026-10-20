@@ -2,12 +2,10 @@ package packagemanagers
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
-	"time"
 
 	"github.com/Ankumeah/pkgeep/utils"
 )
@@ -38,20 +36,14 @@ func init() { PackageManagers[Pacman{}.Name()] = Pacman{} }
 func (p Pacman) Name() string { return "pacman" }
 
 func (p Pacman) Setup(config map[string]any) error {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	su := utils.GetFromConfig[string]("su", config)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
-	pacmanRunCmd(
+	runCmd(
 		ctx,
 		su, "sh", "-c",
 		fmt.Sprintf(
@@ -61,40 +53,29 @@ func (p Pacman) Setup(config map[string]any) error {
 		),
 	)
 
-	pacmanRunCmd(ctx, su, "mv", pacmanHookFile+".tmp", pacmanHookFile)
+	runCmd(ctx, su, "mv", pacmanHookFile+".tmp", pacmanHookFile)
 
 	return nil
 }
 
 func (p Pacman) Teardown(config map[string]any) error {
-	ctx := context.Background()
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
 	if _, err := os.Stat(pacmanHookFile); os.IsNotExist(err) {
 		return nil
 	} else if err != nil {
 		return err
 	}
 
-	pacmanRunCmd(ctx, utils.GetFromConfig[string]("su", config), "rm", pacmanHookFile)
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), "rm", pacmanHookFile)
 
 	return nil
 }
 
 func (p Pacman) GetAllPackages(config map[string]any) ([]Package, error) {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	buf := bytes.NewBuffer(nil)
 
@@ -122,14 +103,29 @@ func (p Pacman) GetAllPackages(config map[string]any) ([]Package, error) {
 	return packages, nil
 }
 
-func pacmanRunCmd(ctx context.Context, name string, args ...string) {
-	cmd := exec.CommandContext(ctx, name, args...)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+func (m Pacman) Download(packages []Package, config map[string]any) error {
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
-	if err := cmd.Run(); err != nil {
-		fmt.Printf("Error while running root command: %v\n", err)
-		os.Exit(1)
+	args := []string{"-Syu"}
+	for _, pkg := range packages {
+		args = append(args, pkg.Name)
 	}
+
+	if utils.GetFromConfig[bool]("aur", config) {
+		runCmd(
+			ctx,
+			utils.GetFromConfig[string]("aur_helper", config),
+			args...,
+		)
+	} else {
+		args = append([]string{"pacman"}, args...)
+		runCmd(
+			ctx,
+			utils.GetFromConfig[string]("su", config),
+			args...,
+		)
+	}
+
+	return nil
 }

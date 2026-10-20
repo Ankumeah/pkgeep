@@ -2,9 +2,7 @@ package storages
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
-	"time"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
@@ -23,14 +21,8 @@ func (s S3Storage) Save(
 	packages []packagemanagers.Package,
 	config map[string]any,
 ) error {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	objectID := utils.GetFromConfig[string]("object_id", config)
 	bucket := utils.GetFromConfig[string]("bucket", config)
@@ -60,14 +52,8 @@ func (s S3Storage) Save(
 func (s S3Storage) Get(
 	config map[string]any,
 ) ([]packagemanagers.Package, error) {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	objectID := utils.GetFromConfig[string]("object_id", config)
 	bucket := utils.GetFromConfig[string]("bucket", config)

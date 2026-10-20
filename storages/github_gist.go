@@ -2,20 +2,17 @@ package storages
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
 	"io"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/Ankumeah/pkgeep/package-managers"
 	"github.com/Ankumeah/pkgeep/utils"
 )
 
 const githubGistBaseURL = "https://api.github.com/gists/"
-const githubGistTimeout = time.Duration(60) * time.Second
 
 type GithubGistStorage struct{}
 
@@ -27,14 +24,8 @@ func (s GithubGistStorage) Save(
 	packages []packagemanagers.Package,
 	config map[string]any,
 ) error {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	pkgs, err := json.Marshal(packages)
 	if err != nil {
@@ -78,11 +69,7 @@ func (s GithubGistStorage) Save(
 	request.Header.Set("X-GitHub-Api-Version", "2026-03-10")
 	request.Header.Set("Authorization", "Bearer "+auth)
 
-	client := http.Client{
-		Timeout: githubGistTimeout,
-	}
-
-	res, err := client.Do(request)
+	res, err := (&http.Client{}).Do(request)
 	if err != nil {
 		return err
 	}
@@ -101,14 +88,8 @@ func (s GithubGistStorage) Save(
 func (s GithubGistStorage) Get(
 	config map[string]any,
 ) ([]packagemanagers.Package, error) {
-	ctx := context.Background()
-
-	timeout := utils.GetFromConfig[float64]("timeout_seconds", config)
-	if timeout < 0 {
-		var cancel func()
-		ctx, cancel = context.WithTimeout(ctx, time.Second*time.Duration(timeout))
-		defer cancel()
-	}
+	ctx, cancel := utils.GetTimeoutContext(config)
+	defer cancel()
 
 	gistID := utils.GetFromConfig[string]("gist_id", config)
 	filename := utils.GetFromConfig[string]("filename", config)
@@ -126,11 +107,7 @@ func (s GithubGistStorage) Get(
 	request.Header.Set("Accept", "application/vnd.github+json")
 	request.Header.Set("X-GitHub-Api-Version", "2026-03-10")
 
-	client := http.Client{
-		Timeout: githubGistTimeout,
-	}
-
-	res, err := client.Do(request)
+	res, err := (&http.Client{}).Do(request)
 	if err != nil {
 		return nil, err
 	}
