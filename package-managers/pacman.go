@@ -10,7 +10,9 @@ import (
 	"github.com/Ankumeah/pkgeep/utils"
 )
 
-const pacmanHookFile = "/usr/share/libalpm/hooks/pkgeep.hook"
+const pacmanHookDir = "/usr/share/libalpm/hooks/"
+const pacmanTempHookFile = pacmanHookDir + "pkgeep.hook"
+const pacmanHookFile = pacmanHookDir + "pkgeep.hook"
 
 var pacmanHook = `
 cat << 'EOF' > %s
@@ -41,19 +43,21 @@ func (p Pacman) Setup(config map[string]any) error {
 
 	su := utils.GetFromConfig[string]("su", config)
 
+  runCmd(ctx, su, "mkdir", "-p", pacmanHookDir)
+
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
 	runCmd(
 		ctx,
 		su, "sh", "-c",
 		fmt.Sprintf(
-			pacmanHook, pacmanHookFile+".tmp",
+			pacmanHook, pacmanTempHookFile,
 			utils.GetFromConfig[string]("cmd", config),
 			utils.GetFromConfig[string]("config_file", config),
 		),
 	)
 
-	runCmd(ctx, su, "mv", pacmanHookFile+".tmp", pacmanHookFile)
+	runCmd(ctx, su, "mv", pacmanTempHookFile, pacmanHookFile)
 
 	return nil
 }

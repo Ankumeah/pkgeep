@@ -11,8 +11,9 @@ import (
 	"github.com/Ankumeah/pkgeep/utils"
 )
 
-const dpkgTempHookFile = "/etc/dpkg/dpkg.cfg.d/.pkgeep.tmp"
-const dpkgHookFile = "/etc/dpkg/dpkg.cfg.d/pkgeep"
+const dpkgHookDir = "/etc/dpkg/dpkg.cfg.d/"
+const dpkgTempHookFile = dpkgHookDir + ".pkgeep.tmp"
+const dpkgHookFile = dpkgHookDir + "pkgeep"
 
 var dpkgHook = `
 cat << 'EOF' > %s
@@ -31,6 +32,8 @@ func (p Dpkg) Setup(config map[string]any) error {
 	defer cancel()
 
 	su := utils.GetFromConfig[string]("su", config)
+
+  runCmd(ctx, su, "mkdir", "-p", dpkgHookDir)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity

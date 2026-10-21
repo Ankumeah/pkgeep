@@ -19,6 +19,9 @@
       },
       {
         "$ref": "./github_gist.json"
+      },
+      {
+        "$ref": "./dnf5.json"
       }
     ]
   }

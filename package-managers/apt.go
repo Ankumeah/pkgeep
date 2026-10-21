@@ -10,8 +10,9 @@ import (
 	"github.com/Ankumeah/pkgeep/utils"
 )
 
-const aptTempHookFile = "/etc/apt/apt.conf.d/.pkgeep.tmp"
-const aptHookFile = "/etc/apt/apt.conf.d/pkgeep"
+const aptHookDir = "/etc/apt/apt.conf.d/"
+const aptTempHookFile = aptHookDir + ".pkgeep.tmp"
+const aptHookFile = aptHookDir + "pkgeep"
 
 var aptHook = `
 cat << 'EOF' > %s
@@ -30,6 +31,8 @@ func (p Apt) Setup(config map[string]any) error {
 	defer cancel()
 
 	su := utils.GetFromConfig[string]("su", config)
+
+  runCmd(ctx, su, "mkdir", "-p", aptHookDir)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity

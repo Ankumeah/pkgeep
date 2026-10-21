@@ -15,6 +15,7 @@ Later you can download all you packages with any one of your storage options
 - [pacman](https://pacman.archlinux.page/) (AUR packages installed through pacman (most AUR helpers like [yay](https://jguer.github.io/yay/) install packages through pacman) are also included)
 - [apt](https://wiki.debian.org/AptCLI)
 - [dpkg](https://www.dpkg.org/) (It is reccamended to use apt instead, download mode is unsupported)
+- [dnf5](https://dnf5.readthedocs.io/en/latest/index.html) (post-transaction-actions plugin is required)
 
 If your package manager is not listed here, keep reading
 
