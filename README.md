@@ -27,11 +27,12 @@ If your package manager is not listed here, keep reading
 If your storage option is not listed here, keep reading
 
 ## What if my package manager or storage option is not in the supported list?
-pkgeep follows a modular system to make sure you can easily patch the source and are
-supported on whatever bespoke package manger or storage option you use (I dont judge)
+> [!NOTE]
+> Only custom package managers have been implimented so far.
+Custom storages coming soon!
 
-  ### What if I don't code?
-  You'r installing a manager for your packages, you can probably do this
+pkgeep allows custom entries directly in the config to make sure you are
+supported on whatever bespoke package manger or storage option you use (I dont judge)
 
 ## Config
 pkgeep by default uses a yaml based config file which is

@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "enabled",
+    "config"
+  ],
+  "properties": {
+    "name": {
+      "const": "custom",
+      "description": "Name of the package manager or storage"
+    },
+    "type": {
+      "const": "package_manager",
+      "description": "package_manager or storage"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Weather or not use to this entry"
+    },
+    "config": {
+      "type": "object",
+      "description": "Entry specifc values",
+      "required": [
+        "name",
+        "setup_cmd",
+        "teardown_cmd",
+        "get_all_packages_cmd",
+        "download_cmd",
+        "timeout_seconds"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the custom entry"
+        },
+        "setup_cmd": {
+          "type": "array",
+          "description": "Command to run in setup mode",
+          "items": {
+            "type": "string"
+          }
+        },
+        "teardown_cmd": {
+          "type": "array",
+          "description": "Command to run in teardown mode",
+          "items": {
+            "type": "string"
+          }
+        },
+        "get_all_packages_cmd": {
+          "type": "array",
+          "description": "Command to run to get all installed packages",
+          "items": {
+            "type": "string"
+          }
+        },
+        "download_cmd": {
+          "type": "array",
+          "description": "Command to run in download mode (pkg list is provided as args)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "description": "Timeout for oprations in seconds"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

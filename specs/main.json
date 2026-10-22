@@ -22,6 +22,9 @@
       },
       {
         "$ref": "./dnf5.json"
+      },
+      {
+        "$ref": "./custom.json"
       }
     ]
   }

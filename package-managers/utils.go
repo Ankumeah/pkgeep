@@ -14,7 +14,7 @@ func runCmd(ctx context.Context, name string, args ...string) {
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Run(); err != nil {
-		fmt.Printf("Error while running root command: %v\n", err)
+		fmt.Printf("Error while running command: %v\n", err)
 		os.Exit(1)
 	}
 }
