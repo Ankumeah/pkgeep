@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "enabled",
+    "config"
+  ],
+  "properties": {
+    "name": {
+      "const": "custom",
+      "description": "Name of the package manager or storage"
+    },
+    "type": {
+      "const": "storage",
+      "description": "package_manager or storage"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Weather or not use to this entry"
+    },
+    "config": {
+      "type": "object",
+      "description": "Entry specifc values",
+      "required": [
+        "save_cmd",
+        "get_cmd",
+        "timeout_seconds"
+      ],
+      "properties": {
+        "save_cmd": {
+          "type": "array",
+          "description": "Command to run when saving (data is provided as the last arg)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "get_cmd": {
+          "type": "array",
+          "description": "Command to run when getting packages",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "description": "Timeout for oprations in seconds"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

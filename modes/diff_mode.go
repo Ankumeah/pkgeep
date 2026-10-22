@@ -111,16 +111,15 @@ func (m DiffMode) Handle(args []string) {
 	for i, pkg := range notInstalled {
 		fmt.Printf(
 			"  %0*d. %-*s %-*s [%s]\n",
-			maxDigits, i, maxNameLen, pkg.Name, maxVersionLen, pkg.Version, pkg.Manager,
+			maxDigits, i+1, maxNameLen, pkg.Name, maxVersionLen, pkg.Version, pkg.Manager,
 		)
 	}
 
 	fmt.Println("Not Stored:")
-	maxDigits = len(strconv.Itoa(len(notStored)))
 	for i, pkg := range notStored {
 		fmt.Printf(
 			"  %0*d. %-*s %-*s [%s]\n",
-			maxDigits, i, maxNameLen, pkg.Name, maxVersionLen, pkg.Version, pkg.Manager,
+			maxDigits, i+1, maxNameLen, pkg.Name, maxVersionLen, pkg.Version, pkg.Manager,
 		)
 	}
 }

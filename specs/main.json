@@ -24,7 +24,10 @@
         "$ref": "./dnf5.json"
       },
       {
-        "$ref": "./custom.json"
+        "$ref": "./custom_manager.json"
+      },
+      {
+        "$ref": "./custom_storage.json"
       }
     ]
   }
