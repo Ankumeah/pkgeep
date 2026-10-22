@@ -32,7 +32,7 @@ func (p Dnf5) Setup(config map[string]any) error {
 
 	su := utils.GetFromConfig[string]("su", config)
 
-  runCmd(ctx, su, "mkdir", "-p", dnf5HookDir)
+	runCmd(ctx, su, "mkdir", "-p", dnf5HookDir)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
@@ -72,8 +72,8 @@ func (p Dnf5) GetAllPackages(config map[string]any) ([]Package, error) {
 
 	buf := bytes.NewBuffer(nil)
 
-  // We cant repoquery while parent dnf keeps its lock
-  // so we sync with the --skip-file-locks flag
+	// We cant repoquery while parent dnf keeps its lock
+	// so we sync with the --skip-file-locks flag
 	cmd := exec.CommandContext(ctx, "dnf5", "--skip-file-locks", "repoquery", "--userinstalled", "--queryformat", "%{name} %{version}\\n")
 	cmd.Stdout = buf
 
@@ -107,7 +107,7 @@ func (m Dnf5) Download(packages []Package, config map[string]any) error {
 		args = append(args, pkg.Name)
 	}
 
-  runCmd(ctx, utils.GetFromConfig[string]("su", config), args...)
+	runCmd(ctx, utils.GetFromConfig[string]("su", config), args...)
 
-  return nil
+	return nil
 }

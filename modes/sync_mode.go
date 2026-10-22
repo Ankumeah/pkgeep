@@ -39,7 +39,7 @@ func (m SyncMode) Handle(args []string) {
 
 		manager, ok := packagemanagers.PackageManagers[managerConfig.Name]
 		if !ok {
-			fmt.Printf("Unsupported package manager %v. Use a custom entry\n", managerConfig.Name)
+			fmt.Printf("Unsupported package manager %v\n", managerConfig.Name)
 			os.Exit(1)
 		}
 
@@ -60,7 +60,7 @@ func (m SyncMode) Handle(args []string) {
 
 		storage, ok := storages.Stoarges[storageConfig.Name]
 		if !ok {
-			fmt.Printf("Unsupported storage %v. Use a custom entry\n", storageConfig.Name)
+			fmt.Printf("Unsupported storage %v\n", storageConfig.Name)
 			os.Exit(1)
 		}
 

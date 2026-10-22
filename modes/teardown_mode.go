@@ -37,7 +37,7 @@ func (m TeardownMode) Handle(args []string) {
 
 		m, ok := packagemanagers.PackageManagers[manager.Name]
 		if !ok {
-			fmt.Printf("Unsupported package manager %v. Use a custom entry\n", manager.Name)
+			fmt.Printf("Unsupported package manager %v\n", manager.Name)
 			os.Exit(1)
 		}
 

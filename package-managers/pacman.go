@@ -43,7 +43,7 @@ func (p Pacman) Setup(config map[string]any) error {
 
 	su := utils.GetFromConfig[string]("su", config)
 
-  runCmd(ctx, su, "mkdir", "-p", pacmanHookDir)
+	runCmd(ctx, su, "mkdir", "-p", pacmanHookDir)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity

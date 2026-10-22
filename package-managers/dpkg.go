@@ -33,7 +33,7 @@ func (p Dpkg) Setup(config map[string]any) error {
 
 	su := utils.GetFromConfig[string]("su", config)
 
-  runCmd(ctx, su, "mkdir", "-p", dpkgHookDir)
+	runCmd(ctx, su, "mkdir", "-p", dpkgHookDir)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity

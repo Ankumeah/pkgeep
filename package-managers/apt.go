@@ -32,7 +32,7 @@ func (p Apt) Setup(config map[string]any) error {
 
 	su := utils.GetFromConfig[string]("su", config)
 
-  runCmd(ctx, su, "mkdir", "-p", aptHookDir)
+	runCmd(ctx, su, "mkdir", "-p", aptHookDir)
 
 	// Not using /tmp to avoid cross fs errors
 	// when renaming while ensuring atomicity
