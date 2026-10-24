@@ -3,6 +3,17 @@
 pkgeep is a package helper that tracks all your packages across
 all your package managers with multiple storage backends
 
+## FOR TARRA REVIEWERS
+If you are a rewvier from tarra, most likely you dont have a access to
+all the envoirments needed to test all the package managers of this project
+(archlinux, fedora, debain, etc) and so I decided to make it a bit easier to
+test by providing pre made Dockerfiles setup to test the package managers.
+These can be found at `./FOR_TERRA/`. Thank you
+
+> [!NOTE]
+> I will try to provide the images from these dockerfiles (not yet provided) but in case I cant
+or you just want to buid yourself, you have to use build context from repo root
+
 ## How it works
 You define all the package managers and storage options you want pkgeep to
 track and sync to in you config file. pkgeep uses hooks provided

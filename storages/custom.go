@@ -46,19 +46,19 @@ func (s CustomStorage) Save(
 		cmd = cmdArr[0]
 	}
 
-  data, err := json.Marshal(packages)
-  if err != nil {
-    return err
-  }
+	data, err := json.Marshal(packages)
+	if err != nil {
+		return err
+	}
 
-  args = append(args, string(data))
+	args = append(args, string(data))
 
-  c := exec.CommandContext(ctx, cmd, args...)
-  c.Stdout = os.Stdout
-  c.Stderr = os.Stderr
-  c.Stdin = os.Stdin
+	c := exec.CommandContext(ctx, cmd, args...)
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
+	c.Stdin = os.Stdin
 
-  return c.Run()
+	return c.Run()
 }
 
 func (s CustomStorage) Get(
@@ -89,20 +89,20 @@ func (s CustomStorage) Get(
 		cmd = cmdArr[0]
 	}
 
-  buf := bytes.NewBuffer(nil)
+	buf := bytes.NewBuffer(nil)
 
-  c := exec.CommandContext(ctx, cmd, args...)
-  c.Stdout = buf
-  c.Stderr = os.Stderr
+	c := exec.CommandContext(ctx, cmd, args...)
+	c.Stdout = buf
+	c.Stderr = os.Stderr
 
-  if err := c.Run(); err != nil {
-    return nil, err
-  }
+	if err := c.Run(); err != nil {
+		return nil, err
+	}
 
-  packages := []packagemanagers.Package{}
-  if err := json.NewDecoder(buf).Decode(&packages); err != nil {
-    return nil, err
-  }
+	packages := []packagemanagers.Package{}
+	if err := json.NewDecoder(buf).Decode(&packages); err != nil {
+		return nil, err
+	}
 
-  return packages, nil
+	return packages, nil
 }

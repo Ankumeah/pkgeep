@@ -1,0 +1,25 @@
+FROM golang:1.27.3-alpine3.24@sha256:b8c9b82affbbb82a020bbcf998dad2ba9516944ac7e883524642a481a9505e9c AS builder
+
+WORKDIR /opt/build
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+RUN --mount=type=cache,target=/root/.cache/go-build \
+  go build -o ./pkgeep -ldflags='-s -w' .
+
+FROM fedora@sha256:43b29f65a41eb9c35e1cd5323e3bdf3b655c2357a9f4f1ff2f9c2798e5045d80
+
+WORKDIR /root/
+
+COPY FOR_TERRA/setup/ .
+COPY FOR_TERRA/specifics/fedora-config.yaml config.yaml
+COPY FOR_TERRA/specifics/fedora-setup.sh setup.sh
+COPY specs/ ./specs
+RUN chmod +x start.sh
+RUN chmod +x setup.sh
+
+COPY --from=builder /opt/build/pkgeep .
+
+ENTRYPOINT [ "/root/start.sh" ]

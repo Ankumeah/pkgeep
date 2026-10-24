@@ -11,7 +11,7 @@ import (
 )
 
 const pacmanHookDir = "/usr/share/libalpm/hooks/"
-const pacmanTempHookFile = pacmanHookDir + "pkgeep.hook"
+const pacmanTempHookFile = pacmanHookDir + ".pkgeep.tmp"
 const pacmanHookFile = pacmanHookDir + "pkgeep.hook"
 
 var pacmanHook = `

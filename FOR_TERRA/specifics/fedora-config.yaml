@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=./specs/main.json
+
+- name: dnf5
+  type: package_manager
+  enabled: true
+  config:
+    config_file: /root/.config/pkgeep/config.yaml
+    cmd: /root/pkgeep
+    su: sudo
+    timeout_seconds: 60.0
+
+- name: local_json
+  type: storage
+  enabled: true
+  config:
+    save_path: /root/local_json.json
