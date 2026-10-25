@@ -1,3 +1,5 @@
+![logo](./logo_640x640.png)
+
 # pkgeep
 
 pkgeep is a package helper that tracks all your packages across
@@ -82,6 +84,15 @@ Modes:
 			--config-file, -c: Path to the config file
 				Usage: (--config-file,-c)=path/to/config/file
 ```
+
+## Logo
+  ### What is it supposed to be?
+  The word "Pkgeep" within a jail cell (yk, like haha, locked your packages..) with
+  "ee" being two of the cell's bars. Inspired by the [raylib](http://www.raylib.com/)
+  (tho that might be an insult with how this turned out)
+
+  ### Why does it look so bad?
+  I tried my best, ok?
 
 ## Contributing
 - Follow commit prefix conventions (tho fun commit bodies are appriciated ;) )
