@@ -13,8 +13,10 @@ test by providing pre made Dockerfiles setup to test the package managers.
 These can be found at `./FOR_TERRA/`. Thank you
 
 > [!NOTE]
-> I will try to provide the images from these dockerfiles (not yet provided) but in case I cant
+> I will try to provide the images from these dockerfiles but in case I cant
 or you just want to buid yourself, you have to use build context from repo root
+
+- [**Docker images**](https://hub.docker.com/r/ankumeah/pkgeep-test)
 
 ## How it works
 You define all the package managers and storage options you want pkgeep to
@@ -86,13 +88,13 @@ Modes:
 ```
 
 ## Logo
-  ### What is it supposed to be?
-  The word "Pkgeep" within a jail cell (yk, like haha, locked your packages..) with
-  "ee" being two of the cell's bars. Inspired by the [raylib](http://www.raylib.com/)
-  (tho that might be an insult with how this turned out)
+### What is it supposed to be?
+The word "Pkgeep" within a jail cell (yk, like haha, locked your packages..) with
+"ee" being two of the cell's bars. Inspired by the [raylib](http://www.raylib.com/)
+(tho that might be an insult with how this turned out)
 
-  ### Why does it look so bad?
-  I tried my best, ok?
+### Why does it look so bad?
+I tried my best, ok?
 
 ## Contributing
 - Follow commit prefix conventions (tho fun commit bodies are appriciated ;) )
