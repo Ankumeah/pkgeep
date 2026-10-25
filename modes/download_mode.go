@@ -14,7 +14,7 @@ type DownloadMode struct{}
 func init() { Modes[DownloadMode{}.Name()] = DownloadMode{} }
 
 func (m DownloadMode) Name() string        { return "download" }
-func (m DownloadMode) Description() string { return "Dwonloads all packages from the top source" }
+func (m DownloadMode) Description() string { return "Downloads all packages from the top source" }
 func (m DownloadMode) Flags() []flag       { return []flag{configFileFlag} }
 
 func (m DownloadMode) Handle(args []string) {
