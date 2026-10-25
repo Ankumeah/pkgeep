@@ -13,7 +13,7 @@ FROM archlinux@sha256:52dfbd5afb23a220d5ee92dafcb4c788d96c026ed04179890c23adef4c
 
 WORKDIR /root/
 
-COPY FOR_TERRA/setup/ .
+COPY FOR_TERRA/common/ .
 COPY FOR_TERRA/specifics/archlinux-config.yaml config.yaml
 COPY FOR_TERRA/specifics/archlinux-setup.sh setup.sh
 COPY specs/ ./specs

@@ -13,7 +13,7 @@ FROM debian@sha256:913f6706df59a68922d1dd08f78c2476560a8d367897200a6005b00e5f67c
 
 WORKDIR /root/
 
-COPY FOR_TERRA/setup/ .
+COPY FOR_TERRA/common/ .
 COPY FOR_TERRA/specifics/debian-config.yaml config.yaml
 COPY FOR_TERRA/specifics/debian-setup.sh setup.sh
 COPY specs/ ./specs

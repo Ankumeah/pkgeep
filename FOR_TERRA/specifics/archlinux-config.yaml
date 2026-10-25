@@ -6,7 +6,7 @@
   config:
     config_file: /root/.config/pkgeep/config.yaml
     cmd: /root/pkgeep
-    su: env
+    su: env # no sudo in the archlinux image so make do with env
     aur: false
     timeout_seconds: 60.0
 

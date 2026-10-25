@@ -1,12 +1,12 @@
 #! /bin/sh
 
-mkdir -p ~/.config/pkgeep
-cp config.yaml ~/.config/pkgeep/
+mkdir -p /root/.config/pkgeep
+cp config.yaml /root/.config/pkgeep/
 
 apt update
-~/pkgeep setup
+/root/pkgeep setup
 
-echo 'PATH="$PATH:/root/"' >> ~/.bashrc
+echo 'PATH="/root/:$PATH"' >> /root/.bashrc
 
 echo 'All setup, run `pkgeep help` to get started!'
 
